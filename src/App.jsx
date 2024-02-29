@@ -5,7 +5,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Account from './components/Account';
 import SingleBook from './components/SingleBook';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navigations';
 
 function App() {
   const [token, setToken] = useState(null);
