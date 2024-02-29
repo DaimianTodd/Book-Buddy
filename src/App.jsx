@@ -1,72 +1,66 @@
-import { useEffect, useState } from 'react'
-import {Link, Routes, Route} from 'react-router-dom'
-import bookLogo from './assets/books.png'
-import Books from './components/Books'
-import Register from './components/Register'
-import Login from './components/Login'
-import Account from './components/Account'
-import SingleBook from './components/SingleBook'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Books from './components/Books';
+import Register from './components/Register';
+import Login from './components/Login';
+import Account from './components/Account';
+import SingleBook from './components/SingleBook';
+import Navbar from './components/Navbar';
 
 function App() {
-  const [token, setToken] = useState(null)
-  const [newReservedBook, setNewReservedBook] = useState(null)
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const [newReservedBook, setNewReservedBook] = useState(null);
 
-  useEffect(()=>{
-    let savedToken = localStorage.getItem("token")
-    if(savedToken != "null"){
-      setToken(savedToken)
+  const fetchUserData = async (token) => {
+    try {
+      if (token) {
+        const response = await fetch("https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/users/me", {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user information');
+        }
+        const result = await response.json();
+        setUser(result);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  },[])
+  };
+  
+  
 
-
-    function logOut(){
-      localStorage.setItem("token", null)
-      setToken(null)
+  useEffect(() => {
+    let savedToken = localStorage.getItem("token");
+    if (savedToken !== "null") {
+      setToken(savedToken);
+      fetchUserData(savedToken);
     }
+  }, [token]); 
+  
 
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setUser(null);
+  };
 
   return (
     <>
-    
-    {/* {
-      token? <button onClick={logOut}>Log Out</button>:
-      <Link to = "/Login">Login</Link>
-    } */}
-
-
-    <button onClick={logOut}>Log Out</button>
-
-    {/* <h2>Register </h2>
-    <Register/>
-    <h2>Login</h2>
-    <Login setToken={setToken}/>
-
-    <h2>See reserved books</h2>
-    <Account token={token} newReservedBook={newReservedBook}/>
-
-    <h2>See all books</h2>
-    <Books token={token} setNewReservedBook={setNewReservedBook}/>
-      <h1><img id='logo-image' src={bookLogo}/>Library App</h1>
-
-      <p>Complete the React components needed to allow users to browse a library catalog, check out books, review their account, and return books that they've finished reading.</p>
-
-      <p>You may need to use the `token` in this top-level component in other components that need to know if a user has logged in or not.</p>
-
-      <p>Don't forget to set up React Router to navigate between the different views of your single page application!</p> */} 
-      <Link to = "/"> <button>Home (See All Books)</button> </Link>
-      <Link to = "/Login">Login</Link>
-      <Link to = "/Register">Register</Link>
-      <Link to = "/Account">Account</Link>
-
+      <Navbar token={token} logOut={logOut} />
       <Routes>
-        <Route path = "/Login" element={<Login setToken={setToken}/>}/>
-        <Route path = "/Register" element={<Register/>}/>
-        <Route path = "/Account" element={<Account token={token} newReservedBook={newReservedBook}/>}/>
-        <Route path = "/" element = {<Books token={token} setNewReservedBook={setNewReservedBook}/>}/>
-        <Route path = "/books/:bookId" element = {<SingleBook/>}/>
+        <Route path="/books/:bookID" element={<SingleBook />} />
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/account" element={<Account token={token} newReservedBook={newReservedBook} user={user} />} />
+        <Route path="/" element={<Books token={token} setNewReservedBook={setNewReservedBook} />} />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

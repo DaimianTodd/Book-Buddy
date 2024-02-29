@@ -6,11 +6,11 @@ export default function Navigation(){
         <div id = "navBar">
             <Link to = '/Account'>Account</Link>
             <br/>
-            <Link to = '/Books'></Link>
+            <Link to = '/Books'>Books</Link>
             <br/>
-            <Link to = '/Login'></Link>
+            <Link to = '/Login'>Login</Link>
             <br/>
-            <Link to = '/Register'></Link>
+            <Link to = '/Register'>Register</Link>
             <br/>
             
         </div>

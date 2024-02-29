@@ -1,12 +1,11 @@
-/* TODO - add your code to create a functional React component that renders a login form *//* TODO - add your code to create a functional React component that renders a registration form */
-import React, { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
 export default function Login({setToken}){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     
         async function handleSubmit(event){
             event.preventDefault()
@@ -22,21 +21,14 @@ export default function Login({setToken}){
                             password: password
                         })
                     })
-                    console.log(response)
                     const result =  await response.json();
-                    console.log(result);
                     setToken(result.token)
                     localStorage.setItem("token", result.token)
 
-                    if (result.token){
+                    if(result.token){
                         navigate("/")
-                    }else{
-                       prompt("Login Unsuccessful, please try again!")
-                    };
-
-
-
-
+                    }
+                
                 } catch (error) {
                     console.error(error);
                 }
@@ -44,7 +36,7 @@ export default function Login({setToken}){
         
         return (
            <>
-            <form onSubmit={handleSubmit}>
+            <form id='loginForm' onSubmit={handleSubmit}>
                 <label>Email:</label>
                 <input value={email} onChange={(event)=>setEmail(event.target.value)}></input>
                 <br></br>
@@ -56,14 +48,3 @@ export default function Login({setToken}){
            </>
         )
     }
-
-
-
-// write a component
-/*
-use a state variable to store the books
-use a useEffect to fetch the books
-use map to map over the books
-    -just the titles
-
-*/
