@@ -37,7 +37,7 @@ export default function Register() {
 
   return (
     <>
-      <form id='registerForm' onSubmit={handleSubmit}>
+      <form id='registrationForm' onSubmit={handleSubmit}>
         <label>Firstname:</label>
         <input type="text" value={firstname} onChange={(event) => setFirstname(event.target.value)}  required />
         <br />

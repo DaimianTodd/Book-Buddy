@@ -7,20 +7,21 @@ export default function SinglePlayer(){
 
 
     useEffect(() =>{
-        const fetchBook = async () =>{
+        const fetchBooks = async () =>{
             try{
                 const response = await fetch (`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books/${bookID}`);
                 if (!response.ok){
                     throw new Error('Failed to fetch player')
                 }
                 const result = await response.json();
+                
                 setBook(result.book);
             }catch(error){  
                 console.error(error);
             }
         };
-
-        fetchBook()
+        
+        fetchBooks()
     }, [bookID])
             
             
@@ -40,6 +41,7 @@ export default function SinglePlayer(){
            </>
         )
     }
+    
     
     
     

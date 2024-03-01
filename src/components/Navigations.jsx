@@ -1,18 +1,13 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Navigation(){
-    return(
-        <div id = "navBar">
-            <Link to = '/Account'>Account</Link>
-            <br/>
-            <Link to = '/Books'>Books</Link>
-            <br/>
-            <Link to = '/Login'>Login</Link>
-            <br/>
-            <Link to = '/Register'>Register</Link>
-            <br/>
-            
+export default function Navbar({ token, logOut }) {
+    return (
+        <div id= "Navigations">
+            {token ? <button id="logoutBtn" onClick={logOut}>Log Out</button> : <Link to="login">Login</Link>}
+            <Link to="/books">Home (See All Books)</Link>
+            <Link to="/register">Register</Link>
+            <Link to="/account">Reserved Books</Link>
         </div>
-    )
+    );
 }

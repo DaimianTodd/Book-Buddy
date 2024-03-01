@@ -13,7 +13,7 @@ export default function Account({ token, user }) {
         }
       });
       if (!response.ok) {
-        throw new Error('Failed to fetch reserved books');
+        throw new Error('Failed to retrieve reserved books');
       }
       const result = await response.json();
       setReservedBooks(result.reservation);
@@ -49,7 +49,7 @@ export default function Account({ token, user }) {
 
   return (
     <>
-      <div className='userInfo'>
+      <div className='userInformation'>
         {user && (
           <>
             <h1>User Login Information:</h1>

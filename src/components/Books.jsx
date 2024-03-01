@@ -68,13 +68,13 @@ export default function Books({ token, setNewReservedBook }) {
                 <input 
                     id='bookSearchBar'
                     type='text'
-                    placeholder='Search book title'
+                    placeholder='Search title'
                     value={searchBook}
                     onChange={handleSearchInputChange}
                     />
             </div>
             
-            <div id='allLibraryBooks'>
+            <div id='allBooks'>
             {filterBooks && filterBooks.map(book => (
                 <div id='libraryBooks' key={book.id}>
                     <p className='bookTitle'>{book.title}</p>
